@@ -18,7 +18,7 @@
                         for(var j=0; j<jiraJson[i].childs.length; j++) {
                     %>
                     <div>
-                        <%= jiraJson[i].childs[j].title %>
+                        <%= jiraJson[i].childs[j].title %> <%= jiraJson[i].childs[j].timespent.hours %>
                     </div>
                     <%
                         }
@@ -35,7 +35,7 @@
                         for(var j=0; j<jiraJson[i].childs.length; j++) {
                     %>
                     <div>
-                        <%= jiraJson[i].childs[j].title %>
+                        <%= jiraJson[i].childs[j].title %> <%= jiraJson[i].childs[j].timespent.hours %>
                     </div>
                     <%
                         }
