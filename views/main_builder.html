@@ -8,10 +8,10 @@
         <div>
             <% for(var i=0; i<jiraJson.length; i++) {%>
                 <%
-                    if(jiraJson[i].parent != 'other') {
+                    if(jiraJson[i].parent.title != 'other') {
                 %>
                 <h3>
-                    <%= jiraJson[i].parent.title %>
+                    <%= jiraJson[i].parent.title %> <%= jiraJson[i].parent.timespent.hours %>
                 </h3>
                 <div>
                     <%
@@ -28,7 +28,7 @@
                     } else {
                 %>
                 <h3>
-                    Other
+                    Other <%= jiraJson[i].parent.timespent.hours %>
                 </h3>
                 <div>
                     <%
