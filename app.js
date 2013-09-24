@@ -1,6 +1,7 @@
 // Import 
 var mainRoute = require('./routes/main');
 var express = require('express');
+var jiraxml2json = require('./lib/jiraxml2json');
 
 // Global var
 var app = express();
@@ -13,7 +14,7 @@ app.set('view engine', 'html');
 app.use(express.bodyParser()); // Enable req.body.PARAMETER.
 
 // Route
-mainRoute(app);
+mainRoute(app, jiraxml2json);
 
 
 app.listen(9000);

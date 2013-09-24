@@ -1,14 +1,12 @@
-module.exports = function(app) {
+module.exports = function(app, jiraxml2json) {
     app.get('/', function(req, res) {
         res.render('main_index');
     });
 
     app.post('/builder', function(req, res) {
-        console.log("=============== XML Content ===============");
-        console.log(req.body.xmlContent);
-        console.log("===========================================");
+        var jiraXml = req.body.xmlContent;
         res.render('main_builder', {
-            'data':'test'
+            'data':jiraxml2json.toJson(jiraXml)
         });
     });
 }
