@@ -5,9 +5,46 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-        <div>test</div>
         <div>
-            <%= data %>
+            <% for(var i=0; i<jiraJson.length; i++) {%>
+                <%
+                    if(jiraJson[i].parent != 'other') {
+                %>
+                <h3>
+                    <%= jiraJson[i].parent.title %>
+                </h3>
+                <div>
+                    <%
+                        for(var j=0; j<jiraJson[i].childs.length; j++) {
+                    %>
+                    <div>
+                        <%= jiraJson[i].childs[j].title %>
+                    </div>
+                    <%
+                        }
+                    %>
+                </div>
+                <%
+                    } else {
+                %>
+                <h3>
+                    Other
+                </h3>
+                <div>
+                    <%
+                        for(var j=0; j<jiraJson[i].childs.length; j++) {
+                    %>
+                    <div>
+                        <%= jiraJson[i].childs[j].title %>
+                    </div>
+                    <%
+                        }
+                    %>
+                </div>
+                <%
+                    }
+                %>                          
+            <% } %>
         </div>
     </body>
 </html>
