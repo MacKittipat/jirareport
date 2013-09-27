@@ -6,19 +6,19 @@
     </head>
     <body>
         <div>
-            <% for(var i=0; i<jiraJson.length; i++) {%>
+            <% for(var i=0; i<jiraJson.parents.length; i++) {%>
                 <%
-                    if(jiraJson[i].parent.title != 'other') {
+                    if(jiraJson.parents[i].title != 'other') {
                 %>
                 <h3>
-                    <%= jiraJson[i].parent.title %> <%= jiraJson[i].parent.timespent.hours %>
+                    <%= jiraJson.parents[i].title %> <%= jiraJson.parents[i].timespent.hours %>
                 </h3>
                 <div>
                     <%
-                        for(var j=0; j<jiraJson[i].childs.length; j++) {
+                        for(var j=0; j<jiraJson.parents[i].childs.length; j++) {
                     %>
                     <div>
-                        <%= jiraJson[i].childs[j].title %> <%= jiraJson[i].childs[j].timespent.hours %>
+                        <%= jiraJson.parents[i].childs[j].title %> <%= jiraJson.parents[i].childs[j].timespent.hours %>
                     </div>
                     <%
                         }
@@ -28,14 +28,14 @@
                     } else {
                 %>
                 <h3>
-                    Other <%= jiraJson[i].parent.timespent.hours %>
+                    Other <%= jiraJson.parents[i].timespent.hours %>
                 </h3>
                 <div>
                     <%
-                        for(var j=0; j<jiraJson[i].childs.length; j++) {
+                        for(var j=0; j<jiraJson.parents[i].childs.length; j++) {
                     %>
                     <div>
-                        <%= jiraJson[i].childs[j].title %> <%= jiraJson[i].childs[j].timespent.hours %>
+                        <%= jiraJson.parents[i].childs[j].title %> <%= jiraJson.parents[i].childs[j].timespent.hours %>
                     </div>
                     <%
                         }
@@ -46,5 +46,8 @@
                 %>                          
             <% } %>
         </div>
+        <h3>
+            Total = <%= jiraJson.timespent.hours %>
+        </h3>
     </body>
 </html>
