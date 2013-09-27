@@ -6,12 +6,14 @@ var jiraxml2json = require('./lib/jiraxml2json');
 // Global var
 var app = express();
 
-// Config View
+// Use ejs template engine
 app.engine('.html', require('ejs').__express);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'html');
-
-app.use(express.bodyParser()); // Enable req.body.PARAMETER.
+// Import all assets file
+app.use(express.static(__dirname + '/assets'));
+// Enable req.body.PARAMETER
+app.use(express.bodyParser()); 
 
 // Route
 mainRoute(app, jiraxml2json);
