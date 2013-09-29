@@ -1,10 +1,23 @@
 #header {
     margin-bottom: 15px;
 }
-#xmlText {
+#header a {
+    color: #5cb85c;
+}
+#header a:hover {
+    color: #4cae4c;
+}
+#content {
+    margin-bottom: 15px;
+}
+#content #xmlText {
     height: 400px;
 }
-
 .margin-bottom {
     margin-bottom: 10px;
+}
+
+/* Normalize tag */
+a:hover {
+   text-decoration: none;
 }

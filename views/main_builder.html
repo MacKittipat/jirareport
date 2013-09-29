@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title></title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <% include template/head.html %>
     </head>
     <body>
-        <div>
+        <% include template/header.html %>
+        <div id="content" class="container">
             <% for(var i=0; i<jiraJson.parents.length; i++) {%>
                 <%
                     if(jiraJson.parents[i].title != 'other') {
                 %>
-                <h3>
+                <h3 class="alert alert-success">
                     <%= jiraJson.parents[i].title %> <%= jiraJson.parents[i].timespent.hours %>
                 </h3>
                 <div>
@@ -45,9 +45,9 @@
                     }
                 %>                          
             <% } %>
+            <h3>
+                Total = <%= jiraJson.timespent.hours %>
+            </h3>
         </div>
-        <h3>
-            Total = <%= jiraJson.timespent.hours %>
-        </h3>
     </body>
 </html>
