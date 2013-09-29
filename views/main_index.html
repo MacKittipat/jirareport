@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>JIRA report builder</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css" />
+        <% include template/head.html %>
     </head>
     <body>
-        <div>
+        <% include template/header.html %>
+        <div id="content" class="container">
             <form action="/builder" method="post">
-                <textarea name="xmlContent"></textarea>
-                <input type="submit" value="Send" />
-            </form>            
+                <div class="row margin-bottom ">
+                    <div class="col-md-12">
+                        <textarea name="xmlText" id="xmlText" class="form-control"></textarea>
+                    </div>                    
+                </div>
+                <div class="row margin-bottom ">
+                    <div class="col-md-12">
+                        <input type="submit" value="Create Report" class="form-control btn btn-success" />
+                    </div>                    
+                </div>
+            </form>        
         </div>
     </body>
 </html>

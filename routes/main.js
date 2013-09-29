@@ -4,7 +4,7 @@ module.exports = function(app, jiraxml2json) {
     });
 
     app.post('/builder', function(req, res) {
-        var jiraXml = req.body.xmlContent;
+        var jiraXml = req.body.xmlText;
         res.render('main_builder', {
             'jiraJson':jiraxml2json.toJson(jiraXml)
         });
