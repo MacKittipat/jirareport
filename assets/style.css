@@ -7,6 +7,9 @@
 #header a:hover {
     color: #4cae4c;
 }
+#header #logo {
+    font-weight: bold;
+}
 #content {
     margin-bottom: 15px;
 }
