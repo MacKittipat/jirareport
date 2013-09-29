@@ -10,15 +10,25 @@
                 <%
                     if(jiraJson.parents[i].title != 'other') {
                 %>
-                <h3 class="alert alert-success">
-                    <%= jiraJson.parents[i].title %> <%= jiraJson.parents[i].timespent.hours %>
-                </h3>
+                <div class="row parent-task">
+                    <div class="col-md-11 title">
+                        <%= jiraJson.parents[i].title %>
+                    </div>
+                    <div class="col-md-1 time">
+                        <%= jiraJson.parents[i].timespent.hours %>
+                    </div>
+                </div>
                 <div>
                     <%
                         for(var j=0; j<jiraJson.parents[i].childs.length; j++) {
                     %>
-                    <div>
-                        <%= jiraJson.parents[i].childs[j].title %> <%= jiraJson.parents[i].childs[j].timespent.hours %>
+                    <div class="row sub-task">
+                        <div class="col-md-11 title">
+                            <%= jiraJson.parents[i].childs[j].title %>
+                        </div>
+                        <div class="col-md-1 time">
+                            <%= jiraJson.parents[i].childs[j].timespent.hours %>
+                        </div>                         
                     </div>
                     <%
                         }
@@ -27,15 +37,25 @@
                 <%
                     } else {
                 %>
-                <h3>
-                    Other <%= jiraJson.parents[i].timespent.hours %>
-                </h3>
+                <div class="row parent-task">
+                    <div class="col-md-11 title">
+                        Others
+                    </div>
+                    <div class="col-md-1 time">
+                        <%= jiraJson.parents[i].timespent.hours %>
+                    </div>
+                </div>
                 <div>
                     <%
                         for(var j=0; j<jiraJson.parents[i].childs.length; j++) {
                     %>
-                    <div>
-                        <%= jiraJson.parents[i].childs[j].title %> <%= jiraJson.parents[i].childs[j].timespent.hours %>
+                    <div class="row sub-task">
+                        <div class="col-md-11 title">
+                            <%= jiraJson.parents[i].childs[j].title %>
+                        </div>
+                        <div class="col-md-1 time">
+                            <%= jiraJson.parents[i].childs[j].timespent.hours %>
+                        </div>                         
                     </div>
                     <%
                         }
@@ -45,9 +65,14 @@
                     }
                 %>                          
             <% } %>
-            <h3>
-                Total = <%= jiraJson.timespent.hours %>
-            </h3>
+            <div class="row sum-task">
+                <div class="col-md-11">
+                    Total 
+                </div>
+                <div class="col-md-1">
+                    <%= jiraJson.timespent.hours %>
+                </div>
+            </div>
         </div>
     </body>
 </html>

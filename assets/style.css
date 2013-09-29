@@ -13,6 +13,21 @@
 #content #xmlText {
     height: 400px;
 }
+#content .parent-task {
+    background-color: #5cb85c;
+    color: white;
+    font-size: 20px;
+}
+#content .sum-task {
+    background-color: #4cae4c;
+    color: white;
+    font-size: 20px;
+}
+#content .parent-task, #content .sub-task, #content .sum-task {
+    margin-bottom: 5px;
+    padding-bottom: 2px;
+    padding-top: 2px;
+}
 .margin-bottom {
     margin-bottom: 10px;
 }
