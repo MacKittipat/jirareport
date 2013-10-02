@@ -6,18 +6,36 @@
     <body>
         <% include template/header.html %>
         <div id="content" class="container">
-            <form action="/builder" method="post">
-                <div class="row margin-bottom ">
-                    <div class="col-md-12">
-                        <textarea name="xmlText" id="xmlText" class="form-control"></textarea>
+            <div>
+                <form class="form-horizontal" onsubmit="openJiraXml()">
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <input type="text" class="form-control" id="sprintNumber" placeholder="Sprint Number">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="submit" value="Open Jira Xml" class="form-control btn btn-success" />
+                        </div>
+                    </div>
+                </form>     
+            </div>
+            <div class="row">
+                <form action="/builder" method="post">
+                    <div class="col-md-12 margin-bottom">
+                        <textarea name="xmlText" id="xmlText" class="form-control" placeholder="Jira Xml Content"></textarea>
                     </div>                    
-                </div>
-                <div class="row margin-bottom ">
-                    <div class="col-md-12">
+                    <div class="col-md-12 margin-bottom">
                         <input type="submit" value="Create Report" class="form-control btn btn-success" />
                     </div>                    
-                </div>
-            </form>        
+                </form>        
+            </div>
         </div>
+        <script type="text/javascript">
+            function openJiraXml() {
+                var jiraXmlUrl = '<%= jiraXmlUrl %>'
+                jiraXmlUrl = jiraXmlUrl.replace('${sprintNumber}', $('#sprintNumber').val());
+                window.open(jiraXmlUrl, '_blank')
+            }
+        </script>
+        <% include template/footer.html %>
     </body>
 </html>
