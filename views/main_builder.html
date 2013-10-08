@@ -74,5 +74,10 @@
                 </div>
             </div>
         </div>
+        <% include template/footer.html %>
+        <script type="text/javascript">
+            var jiraJson = <%- jiraJsonString %>;
+            console.log(jiraJson);
+        </script>
     </body>
 </html>
