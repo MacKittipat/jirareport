@@ -6,78 +6,98 @@
     <body>
         <% include template/header.html %>
         <div id="content" class="container">
-            <% for(var i=0; i<jiraJson.parents.length; i++) {%>
-                <%
-                    if(jiraJson.parents[i].title != 'other') {
-                %>
+            <div data-bind="foreach: parents">                
                 <div class="row parent-task">
-                    <div class="col-md-11 title">
-                        <%= jiraJson.parents[i].title %>
-                    </div>
-                    <div class="col-md-1 time">
-                        <%= jiraJson.parents[i].timespent.hours %>
+                    <div class="col-md-10" data-bind="text: title"></div>
+                    <div class="col-md-1" data-bind="text: timespent.hour"></div>
+                    <div class="col-md-1">
+                        <button data-bind="click: $root.removeParentTask">Remove</button>
                     </div>
                 </div>
-                <div>
-                    <%
-                        for(var j=0; j<jiraJson.parents[i].childs.length; j++) {
-                    %>
+                <div data-bind="foreach: childs">
                     <div class="row sub-task">
-                        <div class="col-md-11 title">
-                            <%= jiraJson.parents[i].childs[j].title %>
+                        <div class="col-md-10" data-bind="text: title"></div>
+                        <div class="col-md-1">
+                            <input type="text"  data-bind="value: timespent.hour, valueUpdate: 'afterkeydown'" />
+                        </div>   
+                        <div class="col-md-1">
+                            <button data-bind="click: $root.removeChildTask.bind($data, $parentContext.$index())">Remove</button>
                         </div>
-                        <div class="col-md-1 time">
-                            <%= jiraJson.parents[i].childs[j].timespent.hours %>
-                        </div>                         
-                    </div>
-                    <%
-                        }
-                    %>
-                </div>
-                <%
-                    } else {
-                %>
-                <div class="row parent-task">
-                    <div class="col-md-11 title">
-                        Others
-                    </div>
-                    <div class="col-md-1 time">
-                        <%= jiraJson.parents[i].timespent.hours %>
                     </div>
                 </div>
-                <div>
-                    <%
-                        for(var j=0; j<jiraJson.parents[i].childs.length; j++) {
-                    %>
-                    <div class="row sub-task">
-                        <div class="col-md-11 title">
-                            <%= jiraJson.parents[i].childs[j].title %>
-                        </div>
-                        <div class="col-md-1 time">
-                            <%= jiraJson.parents[i].childs[j].timespent.hours %>
-                        </div>                         
-                    </div>
-                    <%
-                        }
-                    %>
-                </div>
-                <%
-                    }
-                %>                          
-            <% } %>
+            </div>
             <div class="row sum-task">
                 <div class="col-md-11">
                     Total 
                 </div>
-                <div class="col-md-1">
-                    <%= jiraJson.timespent.hours %>
-                </div>
+                <div class="col-md-1" data-bind="text: timespent.hour"></div>
             </div>
         </div>
         <% include template/footer.html %>
         <script type="text/javascript">
             var jiraJson = <%- jiraJsonString %>;
             console.log(jiraJson);
+            
+            function getParents() {
+                var parents = new Array();
+                for(var i=0; i<jiraJson.parents.length; i++) {
+                    var childs = new Array();
+                    for(var j=0; j<jiraJson.parents[i].childs.length; j++) {
+                        childs.push(new ChildTask(jiraJson.parents[i].childs[j].title, jiraJson.parents[i].childs[j].timespent.hour));
+                    }
+                    parents.push(new ParentTask(jiraJson.parents[i].title, jiraJson.parents[i].timespent.hour, ko.observableArray(childs)));
+                }
+                return parents;
+            }
+            
+            function ChildTask(title, hour) {
+                  var self = this;
+                  self.title = title;
+                  self.timespent = new Object();
+                  self.timespent.hour = ko.observable(hour);
+            }    
+            
+            function ParentTask(title, hour, childs) {
+                var self = this;
+                self.title = title;
+                self.timespent = new Object();
+                self.timespent.hour = ko.computed(function() {
+                    var myChilds = childs();
+                    var hour = 0;
+                    for(var i=0; i<myChilds.length; i++) {
+                        hour += parseFloat(myChilds[i].timespent.hour());
+                    }
+                    return hour;
+                }, childs);
+                self.childs = childs;
+            }
+            
+            function JiraTaskModel() {
+                var self = this;
+                self.parents = ko.observableArray(getParents());
+                self.timespent = new Object();
+                self.timespent.hour = ko.computed(function() {
+                    var myParents = self.parents();
+                    var hour = 0;
+                    for(var i=0; i<myParents.length; i++) {
+                        hour += parseFloat(myParents[i].timespent.hour());
+                    }
+                    return hour;
+                }, self);
+                
+                self.removeParentTask = function(parentTask) {
+                    self.parents.remove(parentTask);
+                }
+                self.removeChildTask = function(parentIndex, childTask) {
+                    self.parents()[parentIndex].childs.remove(childTask);
+                    if(self.parents()[parentIndex].childs().length == 0) {
+                        self.parents.splice(parentIndex, 1);
+                    }
+                }
+            } 
+            
+            var jiraTaskModel = new JiraTaskModel();
+            ko.applyBindings(jiraTaskModel);            
         </script>
     </body>
 </html>
