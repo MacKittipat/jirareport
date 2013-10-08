@@ -29,6 +29,7 @@
                 </form>        
             </div>
         </div>
+        <% include template/footer.html %>
         <script type="text/javascript">
             function openJiraXml() {
                 var jiraXmlUrl = '<%= jiraXmlUrl %>'
@@ -36,6 +37,5 @@
                 window.open(jiraXmlUrl, '_blank')
             }
         </script>
-        <% include template/footer.html %>
     </body>
 </html>
