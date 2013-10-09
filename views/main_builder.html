@@ -11,17 +11,17 @@
                     <div class="col-md-10" data-bind="text: title"></div>
                     <div class="col-md-1" data-bind="text: timespent.hour"></div>
                     <div class="col-md-1">
-                        <button data-bind="click: $root.removeParentTask">Remove</button>
+                        <button data-bind="click: $root.removeParentTask" type="button" class="close" aria-hidden="true">&times;</button>
                     </div>
                 </div>
                 <div data-bind="foreach: childs">
                     <div class="row sub-task">
                         <div class="col-md-10" data-bind="text: title"></div>
                         <div class="col-md-1">
-                            <input type="text"  data-bind="value: timespent.hour, valueUpdate: 'afterkeydown'" />
+                            <input type="text" class="form-control" data-bind="value: timespent.hour, valueUpdate: 'afterkeydown'" />
                         </div>   
                         <div class="col-md-1">
-                            <button data-bind="click: $root.removeChildTask.bind($data, $parentContext.$index())">Remove</button>
+                            <button data-bind="click: $root.removeChildTask.bind($data, $parentContext.$index())" type="button" class="close" aria-hidden="true">&times;</button>
                         </div>
                     </div>
                 </div>
