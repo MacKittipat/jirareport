@@ -6,6 +6,13 @@
     <body>
         <% include template/header.html %>
         <div id="content" class="container">
+            <div class="row  margin-bottom">
+                <div class="col-md-12">
+                    <form id="fmrExport" onsubmit="exportCSV()" action="/export/csv" method="POST" target="_blank">
+                        <input type="submit" value="Export CSV" class="btn btn-success pull-right" />
+                    </form>
+                </div>
+            </div>
             <div data-bind="foreach: parents">                
                 <div class="row parent-task">
                     <div class="col-md-10" data-bind="text: title"></div>
@@ -36,7 +43,6 @@
         <% include template/footer.html %>
         <script type="text/javascript">
             var jiraJson = <%- jiraJsonString %>;
-            console.log(jiraJson);
             
             function getParents() {
                 var parents = new Array();
@@ -97,7 +103,13 @@
             } 
             
             var jiraTaskModel = new JiraTaskModel();
-            ko.applyBindings(jiraTaskModel);            
+            ko.applyBindings(jiraTaskModel);  
+            
+            function exportCSV() {
+                var jiraJson = ko.toJSON(jiraTaskModel);
+                console.log(jiraJson);
+                $("#fmrExport").append("<input type='hidden' name='jiraJson' value='" + escape(jiraJson) + "' />")
+            }
         </script>
     </body>
 </html>

@@ -1,5 +1,6 @@
 // Import 
 var mainRoute = require('./routes/main');
+var exportRoute = require('./routes/export');
 var express = require('express');
 var jiraxml2json = require('./lib/jiraxml2json');
 
@@ -17,7 +18,7 @@ app.use(express.bodyParser());
 
 // Route
 mainRoute(app, jiraxml2json);
-
+exportRoute(app);
 
 app.listen(9000);
 console.log("App is running at http://localhost:9000");
