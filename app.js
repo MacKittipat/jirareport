@@ -2,7 +2,8 @@
 var mainRoute = require('./routes/main');
 var exportRoute = require('./routes/export');
 var express = require('express');
-var jiraxml2json = require('./lib/jiraxml2json');
+var jiraXml2Json = require('./lib/jiraxml2json');
+var jiraJson2Csv = require('./lib/jirajson2csv');
 
 // Global var
 var app = express();
@@ -17,8 +18,8 @@ app.use(express.static(__dirname + '/assets'));
 app.use(express.bodyParser()); 
 
 // Route
-mainRoute(app, jiraxml2json);
-exportRoute(app);
+mainRoute(app, jiraXml2Json);
+exportRoute(app, jiraJson2Csv);
 
 app.listen(9000);
 console.log("App is running at http://localhost:9000");
