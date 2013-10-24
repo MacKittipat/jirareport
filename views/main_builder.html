@@ -9,9 +9,11 @@
             <div class="row  margin-bottom">
                 <div class="col-md-12">
                     <form id="fmrExportCSV" onsubmit="exportFile('fmrExportCSV')" action="/export/csv" method="POST" target="_blank">
+                        <input type="hidden" id="hidJiraJson" name="jiraJson" value="" />
                         <input type="submit" value="Export CSV" class="btn btn-success pull-right" />
                     </form>
                     <form id="fmrExportPDF" onsubmit="exportFile('fmrExportPDF')" action="/export/pdf" method="POST" target="_blank">
+                        <input type="hidden" id="hidJiraJson" name="jiraJson" value="" />
                         <input type="submit" value="Export PDF" class="btn btn-success pull-right" />
                     </form>
                 </div>
@@ -54,7 +56,7 @@
                     for(var j=0; j<jiraJson.parents[i].childs.length; j++) {
                         childs.push(new ChildTask(jiraJson.parents[i].childs[j].title, jiraJson.parents[i].childs[j].timespent.hour));
                     }
-                    parents.push(new ParentTask(jiraJson.parents[i].title, jiraJson.parents[i].timespent.hour, ko.observableArray(childs)));
+                    parents.push(new ParentTask(jiraJson.parents[i].title, ko.observableArray(childs)));
                 }
                 return parents;
             }
@@ -66,7 +68,7 @@
                   self.timespent.hour = ko.observable(hour);
             }    
             
-            function ParentTask(title, hour, childs) {
+            function ParentTask(title, childs) {
                 var self = this;
                 self.title = title;
                 self.timespent = new Object();
@@ -111,7 +113,7 @@
             function exportFile(id) {
                 var jiraJson = ko.toJSON(jiraTaskModel);
                 console.log(jiraJson);
-                $("#" + id).append("<input type='hidden' name='jiraJson' value='" + escape(jiraJson) + "' />")
+                $("#" + id + " #hidJiraJson").val(escape(jiraJson))
             }
         </script>
     </body>
