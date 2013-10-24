@@ -8,8 +8,11 @@
         <div id="content" class="container">
             <div class="row  margin-bottom">
                 <div class="col-md-12">
-                    <form id="fmrExport" onsubmit="exportCSV()" action="/export/csv" method="POST" target="_blank">
+                    <form id="fmrExportCSV" onsubmit="exportFile('fmrExportCSV')" action="/export/csv" method="POST" target="_blank">
                         <input type="submit" value="Export CSV" class="btn btn-success pull-right" />
+                    </form>
+                    <form id="fmrExportPDF" onsubmit="exportFile('fmrExportPDF')" action="/export/pdf" method="POST" target="_blank">
+                        <input type="submit" value="Export PDF" class="btn btn-success pull-right" />
                     </form>
                 </div>
             </div>
@@ -105,10 +108,10 @@
             var jiraTaskModel = new JiraTaskModel();
             ko.applyBindings(jiraTaskModel);  
             
-            function exportCSV() {
+            function exportFile(id) {
                 var jiraJson = ko.toJSON(jiraTaskModel);
                 console.log(jiraJson);
-                $("#fmrExport").append("<input type='hidden' name='jiraJson' value='" + escape(jiraJson) + "' />")
+                $("#" + id).append("<input type='hidden' name='jiraJson' value='" + escape(jiraJson) + "' />")
             }
         </script>
     </body>
