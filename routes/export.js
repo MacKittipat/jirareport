@@ -1,4 +1,5 @@
 var exec = require('child_process').exec;
+var fs = require('fs');
 
 module.exports = function(app, jiraJson2Csv) {
     app.post('/export/csv', function(req, res) {
@@ -16,10 +17,17 @@ module.exports = function(app, jiraJson2Csv) {
         res.render('export_pdf', {
             'jiraJson':jiraJson,
         }, function(err, html) {
-            var htmlContent = html.replace(new RegExp("\n", "g"), "");
-            htmlContent = htmlContent.replace(new RegExp("\'", "g"), "\\'");
-            htmlContent = htmlContent.replace(new RegExp("\"", "g"), '\\"');
-            var child = exec('java -jar exe/html2pdf-1.0.jar "' + htmlContent +  '" "/home/mac/test.pdf"',
+            var htmlContent = html.replace(new RegExp("\n", "g"), ""); // Remove newline
+            htmlContent = htmlContent.replace(new RegExp("\'", "g"), "\\'"); // Escape single quote
+            htmlContent = htmlContent.replace(new RegExp("\"", "g"), '\\"'); // Escape double quote
+            // If target dir does not exist, create a new one
+            fs.exists('target', function(exists) {
+                if(!exists) {
+                    fs.mkdirSync('target');
+                }
+            });
+            // Use html2pdf to generate PDF : https://github.com/MacKittipat/html2pdf
+            var child = exec('java -jar exe/html2pdf-1.0.jar "' + htmlContent +  '" "target/test.pdf"',
             function(error, stdout, stderr) {
                 if (error !== null) {
                     console.log('exec error: ' + error);
