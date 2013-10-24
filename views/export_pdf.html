@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Export PDF</title>
+    </head>
+    <body>
+        <div>
+            <table>
+                <thead>
+                    <tr style="font-weight: bolder;">
+                        <td style="width: 800px;">
+                            Story / Task
+                        </td>
+                        <td style="width: 200px;">
+                            Timespent (hr)
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(var i=0; i<jiraJson.parents.length; i++) {%>
+                    <tr style="background-color: #5cb85c;">
+                        <td>
+                            <%= jiraJson.parents[i].title %>
+                        </td>
+                        <td>
+                            <%= jiraJson.parents[i].timespent.hour %>
+                        </td>
+                    </tr>
+                        <%
+                            for(var j=0; j<jiraJson.parents[i].childs.length; j++) {
+                        %>
+                        <tr>
+                            <td>
+                                <%= jiraJson.parents[i].childs[j].title %>
+                            </td>
+                            <td>
+                                <%= jiraJson.parents[i].childs[j].timespent.hour %>
+                            </td>
+                        </tr>
+                        <%
+                            }
+                        %>                    
+                    <% } %>
+                </tbody>
+                <tfoot>
+                    <tr style="background-color: #4cae4c; font-weight: bolder;">
+                        <td>
+                            Total
+                        </td>
+                        <td>
+                            <%= jiraJson.timespent.hour %>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </body>
+</html>
