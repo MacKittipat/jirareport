@@ -6,8 +6,9 @@
     <body>
         <% include template/header.html %>
         <div id="content" class="container">
+            <div id="error_message" class="alert alert-danger" style="display: none"></div>
             <div>
-                <form class="form-horizontal" onsubmit="openJiraXml()">
+                <form class="form-horizontal" onsubmit="return openJiraXml()">
                     <div class="form-group">
                         <div class="col-md-2">
                             <input type="text" class="form-control" id="sprintNumber" placeholder="Sprint Number">
@@ -32,9 +33,22 @@
         <% include template/footer.html %>
         <script type="text/javascript">
             function openJiraXml() {
-                var jiraXmlUrl = '<%= jiraXmlUrl %>'
+                var sprintNumber = $.trim($('#sprintNumber').val());
+                if(sprintNumber == "") {
+                    $("#error_message").html("Sprint Number is required");
+                    $("#error_message").show();
+                    return false
+                }
+                if(isNaN(sprintNumber)) {
+                    $("#error_message").html("Sprint Number must be numeric");
+                    $("#error_message").show();
+                    return false
+                } 
+                var jiraXmlUrl = '<%= jiraXmlUrl %>';
                 jiraXmlUrl = jiraXmlUrl.replace('${sprintNumber}', $('#sprintNumber').val());
-                window.open(jiraXmlUrl, '_blank')
+                window.open(jiraXmlUrl, '_blank');
+                $("#error_message").hide();
+                return false;
             }
         </script>
     </body>
