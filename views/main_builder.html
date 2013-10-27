@@ -8,14 +8,16 @@
         <div id="content" class="container">
             <div class="row  margin-bottom">
                 <div class="col-md-12">
-                    <form id="fmrExportCSV" onsubmit="exportFile('fmrExportCSV')" action="/export/csv" method="POST" target="_blank">
-                        <input type="hidden" id="hidJiraJson" name="jiraJson" value="" />
-                        <input type="submit" value="Export CSV" class="btn btn-success pull-right" />
-                    </form>
-                    <form id="fmrExportPDF" onsubmit="exportFile('fmrExportPDF')" action="/export/pdf" method="POST" target="_blank">
-                        <input type="hidden" id="hidJiraJson" name="jiraJson" value="" />
-                        <input type="submit" value="Export PDF" class="btn btn-success pull-right" />
-                    </form>
+                    <div class="row">
+                        <form id="fmrExportCSV" class="col-md-1 pull-right" onsubmit="exportFile('fmrExportCSV')" action="/export/csv" method="POST" target="_blank">
+                            <input type="hidden" id="hidJiraJson" name="jiraJson" value="" />
+                            <input type="submit" value="Export CSV" class="btn btn-success pull-right" />
+                        </form>
+                        <form id="fmrExportPDF" class="col-md-1 pull-right" onsubmit="exportFile('fmrExportPDF')" action="/export/pdf" method="POST" target="_blank">
+                            <input type="hidden" id="hidJiraJson" name="jiraJson" value="" />
+                            <input type="submit" value="Export PDF" class="btn btn-success pull-right" />
+                        </form>
+                    </div>
                 </div>
             </div>
             <div data-bind="foreach: parents">                
