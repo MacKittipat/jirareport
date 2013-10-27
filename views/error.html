@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <% include template/head.html %>
+    </head>
+    <body>
+        <% include template/header.html %>
+        <div id="content" class="container">
+            <%
+                if(errorMessage) {                
+            %>
+            <div id="error_message" class="alert alert-danger"><%- errorMessage %></div>
+            <%
+                }
+            %>            
+        </div>
+        <% include template/footer.html %>
+    </body>
+</html>
