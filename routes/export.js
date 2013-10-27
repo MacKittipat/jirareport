@@ -31,6 +31,16 @@ module.exports = function(app, jiraJson2Csv) {
             function(error, stdout, stderr) {
                 if (error !== null) {
                     console.log('exec error: ' + error);
+                } else {
+                    // Render PDF on browser
+                    var pdfPath = 'target/test.pdf';
+                    var pdfStat = fs.statSync(pdfPath);
+                    res.writeHead(200, {
+                        'Content-Type': 'application/pdf',
+                        'Content-Length': pdfStat.size
+                    });
+                    var readStream = fs.createReadStream(pdfPath);
+                    readStream.pipe(res);                    
                 }
             });
         });
