@@ -1,9 +1,13 @@
-// Import 
+// Import routes
 var mainRoute = require('./routes/main');
 var exportRoute = require('./routes/export');
+// Import libs
 var express = require('express');
 var jiraXml2Json = require('./lib/jiraxml2json');
 var jiraJson2Csv = require('./lib/jirajson2csv');
+var exec = require('child_process').exec;
+var fs = require('fs');
+var config = require('./config');
 
 // Global var
 var app = express();
@@ -18,8 +22,8 @@ app.use(express.static(__dirname + '/assets'));
 app.use(express.bodyParser()); 
 
 // Route
-mainRoute(app, jiraXml2Json);
-exportRoute(app, jiraJson2Csv);
+mainRoute(app, jiraXml2Json, config);
+exportRoute(app, jiraJson2Csv, exec, fs);
 
-app.listen(9000);
-console.log("App is running at http://localhost:9000");
+app.listen(config.appPort);
+console.log("App is running at http://localhost:" + config.appPort);

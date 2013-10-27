@@ -1,11 +1,7 @@
-var exec = require('child_process').exec;
-var fs = require('fs');
-
-module.exports = function(app, jiraJson2Csv) {
+module.exports = function(app, jiraJson2Csv, exec, fs) {
     app.post('/export/csv', function(req, res) {
         // jiraJson is escaped because of it contain single quoute and double quote.
-        var jiraJsonString = unescape(req.body.jiraJson);
-        console.log("[DEBUG : export.js] jiraJsonString = " + jiraJsonString);
+        var jiraJsonString = unescape(req.body.jiraJson);        
         var jiraJson = JSON.parse(jiraJsonString);     
         res.setHeader('Content-Type', 'text/plain');
         res.end(jiraJson2Csv.toCsv(jiraJson));
@@ -30,7 +26,7 @@ module.exports = function(app, jiraJson2Csv) {
             var child = exec('java -jar exe/html2pdf-1.0.jar "' + htmlContent +  '" "target/test.pdf"',
             function(error, stdout, stderr) {
                 if (error !== null) {
-                    console.log('exec error: ' + error);
+                    console.log('Executed html2pdf-1.0.jar error: ' + error);
                 } else {
                     // Render PDF on browser
                     var pdfPath = 'target/test.pdf';
