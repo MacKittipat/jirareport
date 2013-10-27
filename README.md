@@ -17,3 +17,10 @@ Usage
 5. Copy xml content 
 6. Paste in Jira Xml Content textarea and click on Create Report button
 7. \O/
+
+Find sprint number 
+-----------------------
+
+1. Open your Agile Board
+2. Click Report button or press key 3 in keyboard 
+3. Sprint number is parameter **sprint** in URL, for example .../RapidBoard.jspa?rapidView=34&view=reporting&chart=burndownChart&**sprint=123**
