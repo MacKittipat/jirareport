@@ -14,8 +14,7 @@ module.exports = function(app, jiraJson2Csv, exec, fs) {
             'jiraJson':jiraJson,
         }, function(err, html) {
             var htmlContent = html.replace(new RegExp("\n", "g"), ""); // Remove newline
-            htmlContent = htmlContent.replace(new RegExp("\'", "g"), "\\'"); // Escape single quote
-            htmlContent = htmlContent.replace(new RegExp("\"", "g"), '\\"'); // Escape double quote
+            htmlContent = htmlContent.replace(new RegExp('"', "g"), '\\"'); // Escape double quote
             // If target dir does not exist, create a new one
             fs.exists('target', function(exists) {
                 if(!exists) {
