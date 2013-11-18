@@ -22,7 +22,7 @@ module.exports = function(app, jiraJson2Csv, exec, fs) {
                     fs.mkdirSync('target');
                 }
             });
-            var pdfName = new Date().getTime() + '.pdf'; 
+            var pdfName = new Date().getTime(); 
             var pdfPath = getPdfPath(pdfName);
             // Use html2pdf to generate PDF : https://github.com/MacKittipat/html2pdf
             var child = exec('java -jar exe/html2pdf-1.0.jar "' + htmlContent +  '" "' + pdfPath + '"',
