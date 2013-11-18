@@ -1,4 +1,5 @@
 module.exports = function(app, jiraJson2Csv, exec, fs) {
+    
     app.post('/export/csv', function(req, res) {
         // jiraJson is escaped because of it contain single quoute and double quote.
         var jiraJsonString = unescape(req.body.jiraJson);        
@@ -21,24 +22,34 @@ module.exports = function(app, jiraJson2Csv, exec, fs) {
                     fs.mkdirSync('target');
                 }
             });
-            var pdfName = new Date().getTime(); 
-            var pdfPath = 'target/' + pdfName + '.pdf';
+            var pdfName = new Date().getTime() + '.pdf'; 
+            var pdfPath = getPdfPath(pdfName);
             // Use html2pdf to generate PDF : https://github.com/MacKittipat/html2pdf
             var child = exec('java -jar exe/html2pdf-1.0.jar "' + htmlContent +  '" "' + pdfPath + '"',
             function(error, stdout, stderr) {
                 if (error !== null) {
                     console.log('Executed html2pdf-1.0.jar error: ' + error);
                 } else {
-                    // Render PDF on browser
-                    var pdfStat = fs.statSync(pdfPath);
-                    res.writeHead(200, {
-                        'Content-Type': 'application/pdf',
-                        'Content-Length': pdfStat.size
-                    });
-                    var readStream = fs.createReadStream(pdfPath);
-                    readStream.pipe(res);                    
+                    // Redirect 
+                    res.redirect('/export/pdf/' + pdfName);                                   
                 }
             });
         });
     }); 
+    
+    app.get('/export/pdf/:pdfName', function(req, res) {
+        var pdfPath = getPdfPath(req.params.pdfName);
+        // Render PDF on browser
+        var pdfStat = fs.statSync(pdfPath);
+        res.writeHead(200, {
+            'Content-Type': 'application/pdf',
+            'Content-Length': pdfStat.size
+        });
+        var readStream = fs.createReadStream(pdfPath);
+        readStream.pipe(res);    
+    });
+    
+    function getPdfPath(pdfName) {
+        return 'target/' + pdfName + '.pdf';
+    }
 }
